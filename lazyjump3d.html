@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<base href="https://rawcdn.githack.com/a456pur/seraph/ae2fcc6d6a9cd051654fcc0519080db1f79cf2a7/games/lazyjump3d/"><script>/*githack-head*/(function(){var G=/^https:\/\/raw(?:cdn)?\.githack\.com\/([^/]+\/[^/]+\/[0-9a-f]{40}\/)/;function fx(u,m){if(String(m).toUpperCase()!=="HEAD")return u;try{var a=String(new URL(u,document.baseURI)),r=G.exec(a);if(r)return"https://raw.githubusercontent.com/"+r[1]+a.slice(r[0].length)}catch(e){}return u}var F=window.fetch;window.fetch=function(i,o){if(typeof i=="string"||i instanceof URL)i=fx(String(i),o&&o.method||"GET");else if(i&&i.method=="HEAD"){var n=fx(i.url,"HEAD");if(n!==i.url)i=new Request(n,i)}return F.call(this,i,o)};var O=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){arguments[1]=fx(u,m);return O.apply(this,arguments)}})()</script>
+    
+
+    <title>Lazy Jump 3D</title>
+    <link rel="shortcut icon" href="../../images/ico.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="canonical" href="../"/>
+
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+</head>
+
+<body>
+    <div id="gameContainer">
+        <canvas id="unity-canvas"></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div></a>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+    </div>
+    <script src="Build/dist.loader.js"></script>
+    <script src="TemplateData/unity.js"></script>
+   
+</body>
+
+</html>

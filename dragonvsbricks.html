@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!-- Google tag (gtag.js) -->
+
+
+    <base href="https://rawcdn.githack.com/genizy/assets/4e2ced5ad916836e4d6bc31dab3b9c660b51d678/dragon-vs-bricks/"><script>/*githack-head*/(function(){var G=/^https:\/\/raw(?:cdn)?\.githack\.com\/([^/]+\/[^/]+\/[0-9a-f]{40}\/)/;function fx(u,m){if(String(m).toUpperCase()!=="HEAD")return u;try{var a=String(new URL(u,document.baseURI)),r=G.exec(a);if(r)return"https://raw.githubusercontent.com/"+r[1]+a.slice(r[0].length)}catch(e){}return u}var F=window.fetch;window.fetch=function(i,o){if(typeof i=="string"||i instanceof URL)i=fx(String(i),o&&o.method||"GET");else if(i&&i.method=="HEAD"){var n=fx(i.url,"HEAD");if(n!==i.url)i=new Request(n,i)}return F.call(this,i,o)};var O=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){arguments[1]=fx(u,m);return O.apply(this,arguments)}})()</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta charset="utf-8" />
+    <meta name="MobileOptimized" content="width" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>University of Adelaide</title>
+    <link rel="stylesheet" href="files/game.css" type="text/css" />
+    <link rel="icon" type="image/png" href="icon.jpg" />
+    <link rel="shortcut icon" type="image/png" href="icon.jpg" />
+  </head>
+  <body>
+    <div id="sg-orient-screen"></div>
+    <div id="sg-loading-screen"></div>
+    <div id="sg-loading-bar-back"><div id="sg-loading-bar"></div></div>
+    <div class="gm4html5_div_class" id="gm4html5_div_id">
+      <canvas id="canvas" width="960" height="1280">
+        <p>Your browser doesn't support HTML5 canvas.</p>
+      </canvas>
+    </div>
+    <script type="text/javascript">
+      splash_w = 960;
+      splash_h = 1280;
+      bar_img_w = 400;
+      bar_img_h = 44;
+      bar_img_x = (splash_w - bar_img_w) / 2;
+      bar_img_y = 1160;
+      canvasobj = document.getElementById("canvas");
+      loadbarobj = document.getElementById("sg-loading-bar");
+      loadbarbackobj = document.getElementById("sg-loading-bar-back");
+      orientobj = document.getElementById("sg-orient-screen");
+      loadingobj = document.getElementById("sg-loading-screen");
+      document.addEventListener(
+        "touchmove",
+        function (e) {
+          e.preventDefault();
+        },
+        false
+      );
+    </script>
+    <script type="text/javascript" src="files/SnakeIceWeb.js"></script>
+  </body>
+</html>
+
+

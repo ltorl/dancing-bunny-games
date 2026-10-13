@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<base href="https://rawcdn.githack.com/waycrosspublicmedia/whatver/f7553d10209f816c80ea9b8fb4e2342fc9750777/nextyou/"><script>/*githack-head*/(function(){var G=/^https:\/\/raw(?:cdn)?\.githack\.com\/([^/]+\/[^/]+\/[0-9a-f]{40}\/)/;function fx(u,m){if(String(m).toUpperCase()!=="HEAD")return u;try{var a=String(new URL(u,document.baseURI)),r=G.exec(a);if(r)return"https://raw.githubusercontent.com/"+r[1]+a.slice(r[0].length)}catch(e){}return u}var F=window.fetch;window.fetch=function(i,o){if(typeof i=="string"||i instanceof URL)i=fx(String(i),o&&o.method||"GET");else if(i&&i.method=="HEAD"){var n=fx(i.url,"HEAD");if(n!==i.url)i=new Request(n,i)}return F.call(this,i,o)};var O=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){arguments[1]=fx(u,m);return O.apply(this,arguments)}})()</script>
+<html lang="en-us">
+<head>
+<!-- Google tag (gtag.js) -->
+
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>University of Adelaide</title>
+  <script src="Build/UnityLoader.js"></script>
+  <script>
+    var gameInstance;
+
+    window.addEventListener("load", function() {
+      gameInstance = UnityLoader.instantiate("gameContainer", "Build/web.json");
+      resizeGame();
+      window.addEventListener("resize", resizeGame);
+    });
+
+    function resizeGame() {
+      var container = document.getElementById("gameContainer");
+      container.style.width = window.innerWidth + "px";
+      container.style.height = window.innerHeight + "px";
+
+      if (gameInstance && gameInstance.Module) {
+        gameInstance.Module.canvas.style.width = window.innerWidth + "px";
+        gameInstance.Module.canvas.style.height = window.innerHeight + "px";
+      }
+    }
+  </script>
+  <link rel="" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    #gameContainer {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameContainer"></div>
+</body>
+</html>
+
+
+

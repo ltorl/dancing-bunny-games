@@ -1,0 +1,58 @@
+<html>
+  	<head>
+<base href="https://rawcdn.githack.com/a456pur/seraph/ae2fcc6d6a9cd051654fcc0519080db1f79cf2a7/games/boxingphysics2/"><script>/*githack-head*/(function(){var G=/^https:\/\/raw(?:cdn)?\.githack\.com\/([^/]+\/[^/]+\/[0-9a-f]{40}\/)/;function fx(u,m){if(String(m).toUpperCase()!=="HEAD")return u;try{var a=String(new URL(u,document.baseURI)),r=G.exec(a);if(r)return"https://raw.githubusercontent.com/"+r[1]+a.slice(r[0].length)}catch(e){}return u}var F=window.fetch;window.fetch=function(i,o){if(typeof i=="string"||i instanceof URL)i=fx(String(i),o&&o.method||"GET");else if(i&&i.method=="HEAD"){var n=fx(i.url,"HEAD");if(n!==i.url)i=new Request(n,i)}return F.call(this,i,o)};var O=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){arguments[1]=fx(u,m);return O.apply(this,arguments)}})()</script>
+        
+
+		<script type="text/javascript">
+		/**
+		 * Game config
+		 */
+
+		window.config = {
+			debug: false,
+			maxRatio: 16 / 9,
+			minRatio: 9 / 16,
+			numScreenshots: 4,
+			unityWebglBuildUrl: 'Build/Boxing-Physics-2.json',
+			unityWebglLoaderUrl: 'Build/UnityLoader.js'
+		};
+		</script>
+
+	    <meta charset="utf-8">
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<title>Boxing Physics 2</title>
+		<link rel="shortcut icon" href="../../images/ico.ico" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<script type="text/javascript" src="scripts/poki-sdk.js"></script>
+  	</head>
+  	<body>
+	  	<div id="loader">
+			<div id="slideshow">
+				<div id="slideshow-top">
+					<img alt="Boxing Physics 2" title="Boxing Physics 2" src="thumbnail.jpg" id="thumbnail" />
+
+					<div id="slideshow-top-container">
+						<div id="game-title">
+							<h1>Boxing Physics 2</h1>
+						</div>
+						<div id="progress-container">
+							<div id="progress-bar">
+								<div id="progress-fill" style="width:0%"></div>
+							</div>
+							<div id="progress-amount">0%</div>
+						</div>
+					</div>
+				</div>
+				<div id="slideshow-images"></div>
+				<div id="slideshow-nav"></div>
+			</div>
+		</div>
+
+	  	<div id="game-container">
+			<div id="game"></div>
+		</div>
+
+		<script type="text/javascript" src="scripts/poki-unity-loader.js"></script>
+	</html>

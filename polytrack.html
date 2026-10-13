@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+
+<!-- Ultimate Game Stash file--> 
+<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
+
+
+
+
+
+<html>
+
+<head><title>University of Adelaide</title>
+<!-- Google tag (gtag.js) -->
+
+
+	<base href="https://rawcdn.githack.com/genizy/polytrack/feb7f045e85fdf07e0d7f7e6d0f08984b9fe20d6/"><script>/*githack-head*/(function(){var G=/^https:\/\/raw(?:cdn)?\.githack\.com\/([^/]+\/[^/]+\/[0-9a-f]{40}\/)/;function fx(u,m){if(String(m).toUpperCase()!=="HEAD")return u;try{var a=String(new URL(u,document.baseURI)),r=G.exec(a);if(r)return"https://raw.githubusercontent.com/"+r[1]+a.slice(r[0].length)}catch(e){}return u}var F=window.fetch;window.fetch=function(i,o){if(typeof i=="string"||i instanceof URL)i=fx(String(i),o&&o.method||"GET");else if(i&&i.method=="HEAD"){var n=fx(i.url,"HEAD");if(n!==i.url)i=new Request(n,i)}return F.call(this,i,o)};var O=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u){arguments[1]=fx(u,m);return O.apply(this,arguments)}})()</script>
+	<script>
+		window.jkdfgnjkndfg = document.querySelector('base').href;
+		fetch("simulation_worker.bundle.js").then(res => res.text()).then(text => {
+			const blob = new Blob([text.replaceAll("replacethisplease", window.jkdfgnjkndfg)], { type: 'application/javascript' });
+			window.simulationworker = URL.createObjectURL(blob);
+		});
+		const ogworker = window.Worker;
+		window.Worker = function (scripturl, options) {
+			if (typeof scripturl === 'string' && scripturl.toLowerCase() === "simulation_worker.bundle.js") {
+				scripturl = window.simulationworker;
+			}
+			return new ogworker(scripturl, options);
+		};
+		window.Worker.prototype = ogworker.prototype;
+
+		const ogfetch = window.fetch;
+		window.fetch = async function (input, init) {
+			if (typeof input === "string") {
+				input = input.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
+			} else if (input instanceof Request) {
+				const newUrl = input.url.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
+				input = new Request(newUrl, input);
+			}
+			return ogfetch(input, init);
+		};
+
+		const ogxml = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+			if (typeof url === "string") {
+				url = url.replace("vps.kodub.com:43273", "vpskodub.tmena1565.workers.dev");
+			}
+			return ogxml.call(this, method, url, ...rest);
+		};
+	</script>
+	<link rel="manifest" href="manifest.json" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+	<canvas id="screen"></canvas>
+	<div id="ui"></div>
+	<div id="transition-layer"></div>
+
+	<script type="module" src="main.bundle.js" defer></script>
+</body>
+
+</html>
+
+
