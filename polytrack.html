@@ -157,12 +157,39 @@
     <link rel="preload" href="images/discord.svg" as="image" type="image/svg+xml" crossorigin="anonymous" />
     <link rel="manifest" href="manifest.json" />
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
-    <script defer="defer" src="error_screen.bundle.js"></script>
-    <script defer="defer" src="main.bundle.js"></script>
 </head>
 <body>
     <canvas id="screen"></canvas>
     <div id="ui"></div>
     <div id="transition-layer"></div>
+    <script>
+        (function() {
+            var reason = "";
+            var probe = document.createElement("canvas");
+            probe.addEventListener("webglcontextcreationerror", function(e) { reason = e.statusMessage || ""; }, false);
+            var gl = null;
+            try { gl = probe.getContext("webgl2", { powerPreference: "high-performance" }); } catch (e) { reason = e.message; }
+            if (gl) {
+                var lose = gl.getExtension("WEBGL_lose_context");
+                if (lose) lose.loseContext();
+                ["error_screen.bundle.js", "main.bundle.js"].forEach(function(src) {
+                    var s = document.createElement("script");
+                    s.src = src;
+                    s.async = false;
+                    document.body.appendChild(s);
+                });
+                return;
+            }
+            document.body.innerHTML =
+                '<div style="font:16px/1.5 sans-serif;color:#fff;background:#1a2040;position:fixed;inset:0;padding:32px;overflow:auto">' +
+                '<h2 style="margin-top:0">PolyTrack needs WebGL 2, and your browser blocked it</h2>' +
+                '<p>This is a browser setting/state problem, not the game files.</p><ol>' +
+                '<li><b>Fully quit Chrome</b> (Cmd+Q) and reopen it. Chrome blocks 3D for a site after a graphics crash until it restarts.</li>' +
+                '<li>Check <code>chrome://settings/system</code> &rarr; "Use graphics acceleration when available" is on.</li>' +
+                '<li>Open <code>chrome://gpu</code> and check that WebGL2 says "Hardware accelerated".</li></ol>' +
+                (reason ? '<p style="opacity:.7">Browser said: ' + String(reason).replace(/[<>&]/g, "") + '</p>' : "") +
+                '</div>';
+        })();
+    </script>
 </body>
 </html>
