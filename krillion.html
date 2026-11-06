@@ -3424,7 +3424,7 @@ async function showResults() {
     const d = $("distribution");
     if (phase !== "done") return;
     if (review2.betterThan === null || game.mode !== "daily") {
-      d.innerHTML = distributionChart([], currentScore, 0) + `<p>${game.mode === "practice" ? "Practice dive \xB7 your daily score stays unchanged." : "YOUR SCORE \xB7 OFFLINE MODE, NO GLOBAL COMPARISON"}</p>`;
+      d.innerHTML = distributionChart([], currentScore, 0) + `<p>${game.mode === "practice" ? "Practice dive" : "YOUR SCORE"}</p>`;
     } else {
       d.innerHTML = distributionChart(review2.dist, currentScore, review2.population) + `<p>BETTER THAN ${review2.betterThan}% OF ${review2.population} OTHER krillion DIVERS</p>`;
     }
