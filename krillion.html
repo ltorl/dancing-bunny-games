@@ -2968,7 +2968,7 @@ async function answer(data) {
   let match = raw && timely ? matchAnswer(raw, prompt.answers) : null;
   if (!match && raw && timely) {
     const verdict = await judgeWithCache(prompt, raw);
-    if (verdict?.valid && TIERS[verdict.tier]) match = { answer: verdict.answer, tier: verdict.tier, ai: true, quip: "the on-device AI judge let this one in." };
+    if (verdict?.valid && TIERS[verdict.tier]) match = { answer: verdict.answer, tier: verdict.tier, ai: true, quip: "" };
   }
   if (!match && raw && !late && !data.timeout) return { rejected: true, message: `\u201C${raw}\u201D: no echo. try again` };
   if (match?.correction && data.confirm !== true && !late && !data.timeout && data.previewCorrection !== false) return { correction: match.answer, original: raw };
@@ -3318,7 +3318,7 @@ function showLanding(result, oldScore = currentScore - result.score) {
   icon.hidden = !tier;
   icon.src = ASSETS[iconFor(result.tier) || "plankton"];
   icon.style.visibility = result.tier === "krillion" ? "hidden" : "visible";
-  $("land-tier").textContent = (tier?.name.toUpperCase() || "NOTHING LANDED") + (result.ai ? " \xB7 AI JUDGED" : "");
+  $("land-tier").textContent = (tier?.name.toUpperCase() || "NOTHING LANDED") + (result.ai ? "" : "");
   $("land-answer").textContent = result.answer ? `\u201C${result.answer}\u201D` : "\u2014";
   $("land-points").innerHTML = `<b>+${result.score} PTS</b>${result.score ? " \xB7 sink " + (result.score * 10).toLocaleString("en-US") + "m" : ""}`;
   $("land-quip").textContent = result.quip || tier?.blurb || (result.rawAnswer ? "never made it onto the reef." : "the clock beat you to it.");
