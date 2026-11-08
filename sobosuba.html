@@ -2155,7 +2155,7 @@ function drawInstructions(ctx, alpha) {
 		? [['select', 'dpad / left stick'], ['aim', 'right stick'], ['launch', 'RB'], null, ['or use mouse', '']]
 		: touch
 			? [['touch and hold', ''], ['drag to aim', ''], ['release to launch', ''], ['second finger to cancel', '']]
-			: [['click and hold', 'left'], ['drag to aim', 'move'], ['release to launch', 'none'], ['cancel launch', 'right'], null, ['or use gamepad', 'pad']];
+			: [['click and hold', 'left'], ['drag to aim', 'move'], ['release to launch', 'none'], ['cancel launch', 'c'], null, ['or use gamepad', 'pad']];
 	ctx.save();
 	ctx.rotate(Cam.rotation);
 	ctx.globalAlpha = alpha;
@@ -2180,6 +2180,13 @@ function drawInstructions(ctx, alpha) {
 				ctx.fillStyle = css(Style.current.background_color);
 				ctx.fillRect(x0 + tw + 16, y - 2, 9, 3); ctx.fillRect(x0 + tw + 19, y - 5, 3, 9);
 				disc(ctx, x0 + tw + 34, y - 3, 2.2, ctx.fillStyle); disc(ctx, x0 + tw + 38, y + 1, 2.2, ctx.fillStyle);
+				ctx.fillStyle = css(Style.current.instructions_color);
+			} else if (icon === 'c') {
+				ctx.beginPath(); ctx.roundRect(x0 + tw + 12, y - 14, 28, 28, 6); ctx.fill();
+				ctx.fillStyle = css(Style.current.background_color);
+				ctx.textAlign = 'center';
+				ctx.fillText('c', x0 + tw + 26, y + 1);
+				ctx.textAlign = 'right';
 				ctx.fillStyle = css(Style.current.instructions_color);
 			} else if (icon) drawMouseIcon(ctx, x0 + tw + (icon === 'move' ? 40 : 26), y, icon);
 		}
@@ -2978,6 +2985,7 @@ const PointerLock = {
 document.addEventListener('pointerlockchange', () => PointerLock.sync());
 document.addEventListener('pointerlockerror', () => PointerLock.sync());
 stage.addEventListener('pointerdown', (e) => {
+	clearTimeout(missedReleaseTimer); missedReleaseTimer = 0;
 	Audio2.unlock();
 	Input.pointerType = e.pointerType;
 	if (Input.device === 'gamepad') Input.device = 'mouse';
@@ -3006,10 +3014,22 @@ stage.addEventListener('pointerdown', (e) => {
 	const p = UI.panelAt(ux, uy);
 	if (p) { activePanel = p; p.pressed = true; UI.playButtonDown(); }
 });
+// a mouse drag that leaves the window (or whose release never arrived) cancels instead of sticking
+let missedReleaseTimer = 0;
+function abortMouseDrag() {
+	if (!Input.down) return;
+	Input.down = false;
+	if (Game.mode) Game.mode.cancelLaunch();
+}
 stage.addEventListener('pointermove', (e) => {
 	const [nx, ny] = PointerLock.locked
 		? [clamp(Input.sx + e.movementX * Settings.data.cursor_accel, 0, View.W - 1), clamp(Input.sy + e.movementY * Settings.data.cursor_accel, 0, View.H - 1)]
 		: [e.clientX, e.clientY];
+	if (e.pointerType === 'mouse' && !PointerLock.locked) {
+		if (nx < 0 || ny < 0 || nx >= window.innerWidth || ny >= window.innerHeight) abortMouseDrag();
+		// a move can report no button just before its pointerup, so only give up if the release really never comes
+		else if (!(e.buttons & 1) && Input.down && !missedReleaseTimer) missedReleaseTimer = setTimeout(() => { missedReleaseTimer = 0; abortMouseDrag(); }, 200);
+	}
 	if (e.pointerType === 'mouse') {
 		Input.mouseSpeed = len(nx - Input.sx, ny - Input.sy) / View.s;
 		if (Input.device === 'gamepad' && Input.mouseSpeed > 2) Input.device = 'mouse';
@@ -3047,11 +3067,12 @@ const endPointer = (e) => {
 };
 stage.addEventListener('pointerup', endPointer);
 stage.addEventListener('pointercancel', endPointer);
-stage.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !PointerLock.locked) { Input.hasCursor = false; UI.leftPanel.hovered = UI.rightPanel.hovered = false; } });
+stage.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse' && !PointerLock.locked) { Input.hasCursor = false; UI.leftPanel.hovered = UI.rightPanel.hovered = false; if (!PointerLock.wanted()) abortMouseDrag(); } });
 window.addEventListener('contextmenu', (e) => e.preventDefault());
 window.addEventListener('keydown', (e) => {
 	Audio2.unlock();
 	if (e.key === 'Escape') { e.preventDefault(); if (Menu.visible) Menu.tryBack(); else if (Game.mode && Game.mode.isLaunching) Game.mode.cancelLaunch(); else Menu.open(); }
+	else if (e.key.toLowerCase() === 'c' && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey && !Menu.visible && Game.mode && Game.mode.isLaunching) { e.preventDefault(); Game.mode.cancelLaunch(); }
 	else if (Menu.visible && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
 		e.preventDefault();
 		const d = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
